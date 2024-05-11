@@ -2,6 +2,7 @@ class InnerText extends HTMLElement {
   constructor() {
     super();
     this.style.display = "block";
+    this.style.width = "100%";
   }
 
   getWidthText = (text, font) => {
@@ -103,13 +104,13 @@ class InnerText extends HTMLElement {
   }
 
   connectedCallback() {
-    this.render();
     window.addEventListener("resize", () => this.render());
+    this.render();
   }
 
   render() {
     // el ancho de la caja
-    const width = this.getBoundingClientRect().width;
+    const width = this.clientWidth;
     const data = this.getAttribute("data")
       ? JSON.parse(this.getAttribute("data"))
       : [];
@@ -121,11 +122,14 @@ class InnerText extends HTMLElement {
       font,
       separator
     );
-    let localInnerString = innerString;
-    if (pending > 0) {
-      localInnerString += ` y ${pending} mas`;
-    }
-    this.innerText = localInnerString;
+    this.innerHTML = `
+      <div style="width: 100%;display: flex; justify-content: space-between; align-items: center;">
+      <span style="width: 100%;  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+        ${innerString}
+      </span>
+       ${pending > 0 ? `<span style="color: red; flex-shrink: 0;">y ${pending} mas</span>` : ""}
+      </div>
+    `;
   }
 }
 
