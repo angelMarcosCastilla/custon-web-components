@@ -5,9 +5,11 @@ class Drawer extends HTMLElement {
   $isOpen = false;
 
   static get styles() {
-    return `
+    return /*css*/ `
     :host {
       display: none;
+      --padding: 16px;
+      --bg-color: white;
     }
       .drawer-container {
       display: block;
@@ -20,10 +22,14 @@ class Drawer extends HTMLElement {
       }
       .drawer {
         position: fixed;
-        width: 600px;
+        max-width: 600px;
         inset: 0;
         margin-left: auto;
-        background-color: white;
+        background-color: var(--bg-color);
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+      }
       `;
   }
   constructor() {
@@ -63,7 +69,6 @@ class Drawer extends HTMLElement {
   handleToggle = () => {
     this.$isOpen = !this.$isOpen;
     this.update();
-    
   };
 
   elements() {
@@ -89,19 +94,120 @@ class Drawer extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = /*html*/ `
     <style>
       ${Drawer.styles}
     </style>
     <div class="drawer-container">
       <div class="drawer" >
-        <slot name="header"></slot>
-        <slot name="content"></slot>
-        <slot name="footer"></slot>
+        <slot></slot>
       </div>
     </div>
     `;
   }
 }
-
 window.customElements.define("lmry-drawer", Drawer);
+
+/*Drawer header */
+class DrawerHeader extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  }
+
+  static get styles() {
+    return /*css*/ `
+    :host {
+      display: block;
+      padding: var(--padding);
+      position: sticky;
+      top: 0;
+      background-color: var(--bg-color);
+    }
+    `;
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    this.shadowRoot.innerHTML = /*html*/ `
+    <style>
+      ${DrawerHeader.styles}
+    </style>
+    <header class="drawer-header">
+      <slot></slot>
+    </header>
+    `;
+  }
+}
+window.customElements.define("lmry-drawer-header", DrawerHeader);
+
+/*Drawer footer */
+class DrawerFooter extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  }
+
+  static get styles() {
+    return /*css*/ `
+    :host {
+      display: block;
+      padding: var(--padding);
+      position: sticky;
+      bottom: 0;
+      background-color: var(--bg-color);
+    }
+    `;
+  }
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    this.shadowRoot.innerHTML = /*html*/ `
+    <style>
+      ${DrawerFooter.styles}
+    </style>
+    <footer class="drawer-footer">
+      <slot></slot>
+    </footer>
+    `;
+  }
+}
+window.customElements.define("lmry-drawer-footer", DrawerFooter);
+
+/*Drawer content */
+class DrawerContent extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  }
+
+  static get styles() {
+    return /*css*/ `
+    :host {
+      display: block;
+      padding: var(--padding);
+      flex: 1 1 0;
+    }
+    `;
+  }
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    this.shadowRoot.innerHTML = /*html*/ `
+    <style>
+      ${DrawerContent.styles}
+    </style>
+    <div class="drawer-content">
+      <slot></slot> 
+    </div>
+    `;
+  }
+}
+window.customElements.define("lmry-drawer-content", DrawerContent);
