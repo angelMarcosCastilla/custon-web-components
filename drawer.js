@@ -3,6 +3,7 @@ class Drawer extends HTMLElement {
   $drawerContainer;
   $drawer;
   $isOpen = false;
+  $btnClose = null;
 
   static sideMap = {
     top: "top",
@@ -64,6 +65,13 @@ class Drawer extends HTMLElement {
         transform: translateY(-100vh);
       }
 
+      .close{
+        position: absolute;
+        z-index: 10;
+        top: var(--padding);
+        right: var(--padding);
+        cursor: pointer;
+      }
       :host([open]) .drawer {
         transform: translateX(0) translateY(0);
         transition: transform 0.2s ease-in-out;
@@ -122,11 +130,13 @@ class Drawer extends HTMLElement {
     this.$root = this.shadowRoot;
     this.$drawerContainer = this.$root.querySelector(".drawer-container");
     this.$drawer = this.$root.querySelector(".drawer");
+    this.$btnClose = this.$root.querySelector(".close");
   }
 
   events() {
     this.$drawerContainer.addEventListener("pointerdown", this.handleToggle);
     this.$drawer.addEventListener("pointerdown", (e) => e.stopPropagation());
+    this.$btnClose.addEventListener("click", this.handleToggle);
   }
 
   update() {
@@ -155,6 +165,7 @@ class Drawer extends HTMLElement {
     </style>
     <div class="drawer-container">
       <div class="drawer" data-side="${this.side}" >
+        <button class="close">X</button>
         <slot></slot>
       </div>
     </div>
