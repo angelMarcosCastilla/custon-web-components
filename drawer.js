@@ -4,12 +4,21 @@ class Drawer extends HTMLElement {
   $drawer;
   $isOpen = false;
 
+  static sideMap = {
+    top: "top",
+    left: "left",
+    right: "right",
+    bottom: "bottom",
+  };
+
+  side = Drawer.sideMap.left;
+  size = 600;
   static get styles() {
     return /*css*/ `
     :host {
-      display: none;
       --padding: 16px;
       --bg-color: white;
+      transition: visibility 0.3s ease-in-out;
     }
       .drawer-container {
       display: block;
@@ -19,16 +28,43 @@ class Drawer extends HTMLElement {
       height: 100%;
       background-color: rgba(0, 0, 0, 0.5);
       z-index: 1000;
+
       }
       .drawer {
+        --width: 100%;
+        --height: 100%;
         position: fixed;
-        max-width: 600px;
-        inset: 0;
-        margin-left: auto;
         background-color: var(--bg-color);
         display: flex;
         flex-direction: column;
         overflow: auto;
+        width: var(--width);
+        height: var(--height);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .drawer[data-side="left"] {
+        left: 0;
+        transform: translateX(-100vw);
+      }
+
+      .drawer[data-side="right"] {
+        right: 0;
+        transform: translateX(100vw);
+      }
+      .drawer[data-side="bottom"] {
+        bottom: 0;
+        transform: translateY(100vh);
+      }
+
+      .drawer[data-side="top"] {
+        top: 0;
+        transform: translateY(-100vh);
+      }
+
+      :host([open]) .drawer {
+        transform: translateX(0) translateY(0);
+        transition: transform 0.2s ease-in-out;
       }
       `;
   }
@@ -42,10 +78,11 @@ class Drawer extends HTMLElement {
     this.elements();
     this.events();
     this.update();
+    this.updateSize();
   }
 
   static get observedAttributes() {
-    return ["open"];
+    return ["open", "side", "size"];
   }
 
   scrollLock() {
@@ -64,6 +101,14 @@ class Drawer extends HTMLElement {
       this.$isOpen = true;
       this.update();
     }
+
+    if (name === "side") {
+      this.side = Drawer.sideMap[newValue] ?? Drawer.sideMap.left;
+    }
+
+    if (name === "size") {
+      this.size = Number(newValue);
+    }
   }
 
   handleToggle = () => {
@@ -78,18 +123,26 @@ class Drawer extends HTMLElement {
   }
 
   events() {
-    this.$drawerContainer.addEventListener("click", this.handleToggle);
-    this.$drawer.addEventListener("click", (e) => e.stopPropagation());
+    this.$drawerContainer.addEventListener("pointerdown", this.handleToggle);
+    this.$drawer.addEventListener("pointerdown", (e) => e.stopPropagation());
   }
 
   update() {
     if (this.$isOpen) {
-      this.style.display = "block";
+      this.style.visibility = "visible";
       this.scrollLock();
     } else {
       this.removeAttribute("open");
-      this.style.display = "none";
+      this.style.visibility = "hidden";
       this.removeScrollLock();
+    }
+  }
+
+  updateSize() {
+    if (["left", "right"].includes(this.side)) {
+      this.$drawer.style.setProperty("--width", `${this.size}px`);
+    } else {
+      this.$drawer.style.setProperty("--height", `${this.size}px`);
     }
   }
 
@@ -99,7 +152,7 @@ class Drawer extends HTMLElement {
       ${Drawer.styles}
     </style>
     <div class="drawer-container">
-      <div class="drawer" >
+      <div class="drawer" data-side="${this.side}" >
         <slot></slot>
       </div>
     </div>
