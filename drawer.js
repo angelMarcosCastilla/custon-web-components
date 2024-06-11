@@ -18,17 +18,15 @@ class Drawer extends HTMLElement {
     :host {
       --padding: 16px;
       --bg-color: white;
+      z-index: 1000;
       transition: visibility 0.3s ease-in-out;
     }
       .drawer-container {
       display: block;
       position: fixed;
       top: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       background-color: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-
       }
       .drawer {
         --width: 100%;
@@ -38,27 +36,31 @@ class Drawer extends HTMLElement {
         display: flex;
         flex-direction: column;
         overflow: auto;
-        width: var(--width);
-        height: var(--height);
+        max-width: var(--width);
+        max-height: var(--height);
         transition: transform 0.3s ease-in-out;
       }
 
       .drawer[data-side="left"] {
         left: 0;
+        height: 100%;
         transform: translateX(-100vw);
       }
 
       .drawer[data-side="right"] {
         right: 0;
+        height:  100%;
         transform: translateX(100vw);
       }
       .drawer[data-side="bottom"] {
         bottom: 0;
+        width: 100%;
         transform: translateY(100vh);
       }
 
       .drawer[data-side="top"] {
         top: 0;
+        width: 100%;
         transform: translateY(-100vh);
       }
 
