@@ -1,6 +1,7 @@
 class Avatar extends HTMLElement {
   $avatarImage = null;
   $initials = null;
+
   src = "";
   alt = "";
   name = "";
@@ -35,6 +36,32 @@ class Avatar extends HTMLElement {
 
   static get observedAttributes() {
     return ["src", "alt", "name"];
+  }
+
+  getColorForName(name) {
+    const colors = [
+      "#1abc9c",
+      "#2ecc71",
+      "#3498db",
+      "#9b59b6",
+      "#34495e",
+      "#f1c40f",
+      "#e67e22",
+      "#e74c3c",
+      "#ecf0f1",
+      "#95a5a6",
+    ];
+    const hash = this.hashStringToNumber(name);
+    return colors[hash % colors.length];
+  }
+
+  hashStringToNumber() {
+    const str = this.name.toLowerCase();
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash += str.charCodeAt(i);
+    }
+    return hash % 10;
   }
 
   static get styles() {
@@ -78,7 +105,6 @@ class Avatar extends HTMLElement {
   getInitials() {
     const name = this.name.toUpperCase().split(" ");
     let initials = "";
-    console.log(name);
     for (let i = 0; i < name.length; i++) {
       initials += name[i].charAt(0);
     }
@@ -105,8 +131,12 @@ class Avatar extends HTMLElement {
       this.$avatarImage.onload = () => this.showinitial(false);
     }
 
-    if(!this.src){
+    if (!this.src) {
       this.showinitial(true);
+    }
+
+    if(this.name){
+      this.style.backgroundColor = this.getColorForName(this.name);
     }
   }
 
