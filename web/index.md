@@ -2,9 +2,10 @@
 home: true
 ---
 
-# Avatar Component
+<h1>custom web components</h1>
 
-[api-examples](./api-examples.md)
-[markdown-features](./markdown-examples.md)
+Este es un repositorio para crear web components reutilizables.
 
-A simple avatar component
+<a class="btn" href="/components/avatar">
+ver componente 
+</a>

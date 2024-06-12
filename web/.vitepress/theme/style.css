@@ -3,3 +3,27 @@ html {
   font-family: Arial, Helvetica;
 }
 
+.btn{
+  all: unset;
+  color: white !important;
+  text-decoration: none !important;
+  background-color: var(--vp-c-indigo-3) !important;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* 
+#app::after{
+  content: "";
+  position: fixed;
+  display: block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  box-shadow: 30px 30px rgb(0, 255, 55);
+  z-index: -1;
+  filter: blur(50px);
+} */
