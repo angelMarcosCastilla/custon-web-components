@@ -31,5 +31,15 @@ export default defineConfig({
       ],
     },
   },
+
+  vueOptions: {
+    template: {
+      compilerOptions: {
+        isCustomElement: (tag) => {
+          return tag.toLowerCase().indexOf("an-") === 0;
+        }
+      }
+    }
+  },
   
 });
