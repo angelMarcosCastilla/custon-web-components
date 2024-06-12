@@ -78,20 +78,18 @@ class Avatar extends HTMLElement {
   getInitials() {
     const name = this.name.toUpperCase().split(" ");
     let initials = "";
+    console.log(name);
     for (let i = 0; i < name.length; i++) {
       initials += name[i].charAt(0);
     }
     return initials;
-    
   }
-
 
   showinitial(show) {
     if (show) {
       this.$initials.style.display = "grid";
       this.$initials.textContent = this.getInitials();
       this.$avatarImage.style.display = "none";
-
     } else {
       this.$avatarImage.style.display = "block";
       this.$initials.style.display = "none";
@@ -100,11 +98,15 @@ class Avatar extends HTMLElement {
   update() {
     if (!this.$avatarImage) return;
 
-    if (this.src !== "") {
+    if (this.src && this.src !== "") {
       this.$avatarImage.src = this.src;
       this.$avatarImage.alt = this.alt;
       this.$avatarImage.onerror = () => this.showinitial(true);
       this.$avatarImage.onload = () => this.showinitial(false);
+    }
+
+    if(!this.src){
+      this.showinitial(true);
     }
   }
 
