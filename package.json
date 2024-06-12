@@ -1,0 +1,13 @@
+{
+  "name": "avatar-component",
+  "version": "0.0.0",
+  "description": "A simple avatar component",
+  "devDependencies": {
+    "vitepress": "^1.2.3"
+  },
+  "scripts": {
+    "web:dev": "vitepress dev web",
+    "web:build": "vitepress build web",
+    "web:preview": "vitepress preview web"
+  }
+}
