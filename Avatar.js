@@ -39,20 +39,35 @@ class Avatar extends HTMLElement {
   }
 
   getColorForName(name) {
-    const colors = [
-      "#1abc9c",
-      "#2ecc71",
-      "#3498db",
-      "#9b59b6",
-      "#34495e",
-      "#f1c40f",
-      "#e67e22",
-      "#e74c3c",
-      "#ecf0f1",
-      "#95a5a6",
+    const bgcolors = [
+      "#fef3c7",
+      "#edfde8",
+      "#e2f1fc",
+      "#d0f7eb",
+      "#f1eafd",
+      "#fee2e2",
+      "#f9eaf3",
+      "#dcffd9",
+      "#effef6",
+      "#fbfee7",
     ];
+
+    const textColors = [
+      "#d87607",
+      "#22b313",
+      "#1380be",
+      "#198872",
+      "#702ec2",
+      "#cb2020",
+      "#a6305f",
+      "#146c0f",
+      "#0c894a",
+      "#81a20e",
+    ];
+    if(!name) return ["#d1d1d0", "#4f504e"];
     const hash = this.hashStringToNumber(name);
-    return colors[hash % colors.length];
+    const index = hash % bgcolors.length;
+    return [bgcolors[index], textColors[index]];
   }
 
   hashStringToNumber() {
@@ -92,7 +107,7 @@ class Avatar extends HTMLElement {
         height: 100%;
         width: 100%;
         place-content: center;
-        font-size: 1.5rem;
+        font-size: 1.1rem;
         font-weight: bold;
       }
     `;
@@ -114,13 +129,14 @@ class Avatar extends HTMLElement {
   showinitial(show) {
     if (show) {
       this.$initials.style.display = "grid";
-      this.$initials.textContent = this.getInitials();
+      this.$initials.textContent = this.getInitials() || "-";
       this.$avatarImage.style.display = "none";
     } else {
       this.$avatarImage.style.display = "block";
       this.$initials.style.display = "none";
     }
   }
+
   update() {
     if (!this.$avatarImage) return;
 
@@ -135,9 +151,9 @@ class Avatar extends HTMLElement {
       this.showinitial(true);
     }
 
-    if(this.name){
-      this.style.backgroundColor = this.getColorForName(this.name);
-    }
+      const [bgcolor, textcolor] = this.getColorForName(this.name);
+      this.style.backgroundColor = bgcolor;
+      this.style.color = textcolor;
   }
 
   render() {
