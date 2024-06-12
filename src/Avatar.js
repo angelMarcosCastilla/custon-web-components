@@ -1,3 +1,5 @@
+
+const NAME = "an-avatar";
 class Avatar extends HTMLElement {
   $avatarImage = null;
   $initials = null;
@@ -169,4 +171,4 @@ class Avatar extends HTMLElement {
   }
 }
 
-window.customElements.define("lmry-avatar", Avatar);
+window.customElements.define(NAME, Avatar);

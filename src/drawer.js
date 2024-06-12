@@ -1,3 +1,9 @@
+const NAME_DRAWER = "an-drawer";
+const NAME_DRAWER_HEADER = "an-drawer-header"
+const NAME_DRAWER_FOOTER = "an-drawer-footer"
+const NAME_DRAWER_CONTENT = "an-drawer-content"
+
+
 class Drawer extends HTMLElement {
   $root;
   $drawerContainer;
@@ -172,7 +178,7 @@ class Drawer extends HTMLElement {
     `;
   }
 }
-window.customElements.define("lmry-drawer", Drawer);
+window.customElements.define(NAME_DRAWER, Drawer);
 
 /*Drawer header */
 class DrawerHeader extends HTMLElement {
@@ -208,7 +214,7 @@ class DrawerHeader extends HTMLElement {
     `;
   }
 }
-window.customElements.define("lmry-drawer-header", DrawerHeader);
+window.customElements.define(NAME_DRAWER_HEADER, DrawerHeader);
 
 /*Drawer footer */
 class DrawerFooter extends HTMLElement {
@@ -243,7 +249,7 @@ class DrawerFooter extends HTMLElement {
     `;
   }
 }
-window.customElements.define("lmry-drawer-footer", DrawerFooter);
+window.customElements.define(NAME_DRAWER_FOOTER, DrawerFooter);
 
 /*Drawer content */
 class DrawerContent extends HTMLElement {
@@ -276,4 +282,4 @@ class DrawerContent extends HTMLElement {
     `;
   }
 }
-window.customElements.define("lmry-drawer-content", DrawerContent);
+window.customElements.define(NAME_DRAWER_CONTENT, DrawerContent);

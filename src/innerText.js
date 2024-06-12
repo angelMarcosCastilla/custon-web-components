@@ -1,3 +1,4 @@
+const INNER_NAME = "an-inner-text";
 class InnerText extends HTMLElement {
   constructor() {
     super();
@@ -133,4 +134,4 @@ class InnerText extends HTMLElement {
   }
 }
 
-window.customElements.define("inner-text", InnerText);
+window.customElements.define(INNER_NAME, InnerText);

@@ -1,3 +1,4 @@
+const TIME_AGO_NAME = "an-timeago"
 class TimeAgo extends HTMLElement {
   constructor() {
     super();
@@ -52,4 +53,4 @@ class TimeAgo extends HTMLElement {
   }
 }
 
-customElements.define('time-ago', TimeAgo);
+customElements.define('time-ago', TIME_AGO_NAME);
