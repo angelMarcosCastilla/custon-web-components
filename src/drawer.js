@@ -1,8 +1,7 @@
-const NAME_DRAWER = "an-drawer";
+const NAME_DRAWER = "an-drawer"
 const NAME_DRAWER_HEADER = "an-drawer-header"
 const NAME_DRAWER_FOOTER = "an-drawer-footer"
 const NAME_DRAWER_CONTENT = "an-drawer-content"
-
 
 class Drawer extends HTMLElement {
   $root;
@@ -25,7 +24,12 @@ class Drawer extends HTMLElement {
     :host {
       --padding: 16px;
       --bg-color: white;
-      z-index: 1000;
+      --width: 100%;
+      --height: 100%;
+      visibility: hidden;
+      z-index: 999999;
+      position: fixed;
+      inset: 0;
       transition: visibility 0.3s ease-in-out;
     }
       .drawer-container {
@@ -36,16 +40,13 @@ class Drawer extends HTMLElement {
       background-color: rgba(0, 0, 0, 0.5);
       }
       .drawer {
-        --width: 100%;
-        --height: 100%;
         position: fixed;
         background-color: var(--bg-color);
         display: flex;
         flex-direction: column;
         overflow: auto;
-        max-width: var(--width);
-        max-height: var(--height);
-        transition: transform 0.3s ease-in-out;
+        width: min(100dvw, var(--width));
+        height: min(100dvh, var(--height));
       }
 
       .drawer[data-side="left"] {
@@ -118,12 +119,14 @@ class Drawer extends HTMLElement {
       this.update();
     }
 
-    if (name === "side") {
-      this.side = Drawer.sideMap[newValue] ?? Drawer.sideMap.left;
-    }
-
     if (name === "size") {
       this.size = Number(newValue);
+    }
+
+    if (name === "side") {
+      this.side = Drawer.sideMap[newValue] ?? Drawer.sideMap.left;
+      this.$drawer.dataset.side = this.side;
+      this.updateSize();
     }
   }
 
