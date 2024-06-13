@@ -6,7 +6,8 @@ const props = defineProps({
 });
 
 onMounted(() => {
-  const baseRoute = "/" + props.url;
+  const baseRoute = `${window.location.origin}/${props.url}`;
+  console.log(baseRoute);
   import(baseRoute).then((module) => {
     console.log(module, "module");
   });
