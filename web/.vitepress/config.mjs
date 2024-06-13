@@ -32,11 +32,11 @@ export default defineConfig({
     },
   },
 
-  vueOptions: {
+  vue: {
     template: {
       compilerOptions: {
         isCustomElement: (tag) => {
-          return tag.toLowerCase().indexOf("an-") === 0;
+          return tag.includes("an-");
         }
       }
     }
