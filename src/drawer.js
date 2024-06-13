@@ -47,6 +47,7 @@ class Drawer extends HTMLElement {
         overflow: auto;
         width: min(100dvw, var(--width));
         height: min(100dvh, var(--height));
+        transition: transform 0.3s ease-in-out;
       }
 
       .drawer[data-side="left"] {
@@ -125,7 +126,7 @@ class Drawer extends HTMLElement {
 
     if (name === "side") {
       this.side = Drawer.sideMap[newValue] ?? Drawer.sideMap.left;
-      this.$drawer.dataset.side = this.side;
+      if(this.$drawer) this.$drawer.dataset.side = this.side;
       this.updateSize();
     }
   }
@@ -160,6 +161,7 @@ class Drawer extends HTMLElement {
   }
 
   updateSize() {
+    if(!this.$drawer) return;
     if (["left", "right"].includes(this.side)) {
       this.$drawer.style.setProperty("--width", `${this.size}px`);
     } else {
