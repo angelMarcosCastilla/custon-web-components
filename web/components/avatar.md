@@ -8,7 +8,7 @@ import Examples from '../share/Example.vue'
 
 # Avatar
 
-Un componente para mostrar una imagen, cuenta con un fallback. Si no hay imagen o no es válida tomaría las iniciales del atributo. `name` para mostrar como texto y con colores que se calcula automáticamente. [ver codigo](https://github.com/angelMarcosCastilla/custon-web-components/blob/main/src/Avatar.js)
+Un componente para mostrar una imagen, cuenta con un fallback. Si no hay imagen o no es válida tomaría las iniciales del atributo. `name` para mostrar como texto y con colores que se calcula automáticamente. [ver codigo](https://github.com/angelMarcosCastilla/custon-web-components/blob/main/web/public/Avatar.js)
 
 ## Ejemplos
 

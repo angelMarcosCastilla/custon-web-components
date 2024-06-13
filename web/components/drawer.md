@@ -24,7 +24,7 @@ onMounted(() => {
 
 # Drawer
 
-Un componente para mostrar un panel de contenido, con un header, footer y contenido. [ver codigo](https://github.com/angelMarcosCastilla/custon-web-components/blob/main/src/drawer.js)
+Un componente para mostrar un panel de contenido, con un header, footer y contenido. [ver codigo](https://github.com/angelMarcosCastilla/custon-web-components/blob/main/web/public/drawer.js)
 
 ## Ejemplos
 
