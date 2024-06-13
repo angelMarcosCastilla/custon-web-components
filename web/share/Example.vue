@@ -6,7 +6,7 @@ const props = defineProps({
 });
 
 onMounted(() => {
-  const baseRoute = "http://127.0.0.1:5500/src/" + props.url;
+  const baseRoute = "/" + props.url;
   import(baseRoute).then((module) => {
     console.log(module, "module");
   });
