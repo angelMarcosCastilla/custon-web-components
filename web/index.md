@@ -1,14 +1,16 @@
 ---
+layout: home
 home: true
+hero:
+  name: web components
+  text: componentes web reutilizables
+  tagline: En esta página encontraras componentes web que podrás copiar y usar en tus proyectos
+  actions:
+    - theme: brand
+      text: ver componentes
+      link: /components/avatar
+    - theme: alt
+      text: github
+      link: https://github.com/angelMarcosCastilla/custon-web-components/tree/main/web/public
 ---
 
-<h1>web components</h1>
-
-[WebComponents](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) es una tecnología que te permite crear componentes reutilizables y personalizables para tus aplicaciones web. Mejora la eficiencia y la calidad de tu desarrollo.
-
-
-
-
-<a class="btn" href="/components/avatar">
-ver componentes 
-</a>
