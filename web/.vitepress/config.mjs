@@ -18,6 +18,7 @@ export default defineConfig({
               text: "drawer",
               link: "/components/drawer",
             },
+            { text: "dialog", link: "/components/dialog" },
             {
               text: "time-ago",
               link: "/components/time-ago",
