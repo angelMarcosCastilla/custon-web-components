@@ -15,6 +15,7 @@ class Dialog extends HTMLElement {
     :host {
       --size: 600px;
       --padding: 16px;
+      --bg-color: white;
       display: block;
       position: fixed;
       top: 0;
@@ -23,6 +24,15 @@ class Dialog extends HTMLElement {
       height: 100%;
       z-index: 999999;
       visibility: hidden;
+      transition: visibility 0.3s ease-in-out;
+    }
+
+    #close-button{
+      position: absolute;
+      top: var(--padding);
+      right: var(--padding);
+      cursor: pointer;
+      z-index: 10;
     }
 
     .dialog-backdrop {
@@ -35,13 +45,23 @@ class Dialog extends HTMLElement {
     }
 
     .dialog{
+      position: relative;
       background: white;
       border-radius: 10px;
       width: min(100vw, var(--size));
       display: flex;
       flex-direction: column;
       overflow: auto;
+      max-height: 90vh;
+      background-color: var(--bg-color);
+      transform: scale(0);
+      transition: transform 0.1s ease-in-out;
     }
+
+    .dialog[data-open]{
+      transform: scale(1);
+    }
+    
     
     `;
   }
@@ -49,6 +69,7 @@ class Dialog extends HTMLElement {
   connectedCallback() {
     this.render();
     this.elements();
+    this.events();
     this.update();
   }
 
@@ -66,11 +87,25 @@ class Dialog extends HTMLElement {
     this.$backdrop = this.shadowRoot.querySelector("#dialog-backdrop");
     this.$content = this.shadowRoot.querySelector("#dialog-content");
     this.$dialog = this.shadowRoot.querySelector(".dialog");
+    this.$closeButton = this.shadowRoot.querySelector("#close-button");
+  }
+
+  handleClose = () => {
+    this.#open = false;
+    this.update();
+  };
+
+  events(){
+    this.$backdrop.addEventListener("click", this.handleClose);
+    this.$dialog.addEventListener("click", (e) => e.stopPropagation());
+    this.$closeButton.addEventListener("click", this.handleClose);
   }
 
   update(){
     if(!this.$dialog) return;
+    this.$dialog.removeAttribute("data-open");
     if(this.#open){
+      this.$dialog.setAttribute("data-open", "");
       this.style.visibility = "visible";
     }else{
       this.style.visibility = "hidden";
@@ -84,6 +119,7 @@ class Dialog extends HTMLElement {
     </style>
     <div class="dialog-backdrop" id="dialog-backdrop">
         <div class="dialog">
+          <button class="an-icon-close" id="close-button">X</button>
           <slot ></slot>
         </div>
     </div>
