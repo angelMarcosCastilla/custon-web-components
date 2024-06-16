@@ -103,6 +103,14 @@ class Drawer extends HTMLElement {
     return ["open", "side", "size"];
   }
 
+  closePressEscape = (e) => {
+    if (e.key === "Escape") {
+      if(this.$isOpen){
+        this.handleToggle();
+      }
+    }
+  };
+
   scrollLock() {
     const scrollBarWidth = window.innerWidth - document.body.clientWidth;
     document.body.style.overflow = "hidden";
@@ -147,6 +155,7 @@ class Drawer extends HTMLElement {
     this.$drawerContainer.addEventListener("pointerdown", this.handleToggle);
     this.$drawer.addEventListener("pointerdown", (e) => e.stopPropagation());
     this.$btnClose.addEventListener("click", this.handleToggle);
+    document.addEventListener("keydown", this.closePressEscape);
   }
 
   update() {

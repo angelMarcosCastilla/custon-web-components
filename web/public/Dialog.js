@@ -62,9 +62,17 @@ class Dialog extends HTMLElement {
       transform: scale(1);
     }
     
-    
     `;
   }
+
+  closePressEscape = (e) => {
+    if (e.key === "Escape") {
+      if(this.#open){
+        this.#open = false;
+        this.update();
+      }
+    }
+  };
 
   connectedCallback() {
     this.render();
@@ -99,6 +107,7 @@ class Dialog extends HTMLElement {
     this.$backdrop.addEventListener("click", this.handleClose);
     this.$dialog.addEventListener("click", (e) => e.stopPropagation());
     this.$closeButton.addEventListener("click", this.handleClose);
+    document.addEventListener("keydown", this.closePressEscape);
   }
 
   update(){
