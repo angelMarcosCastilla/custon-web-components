@@ -4,7 +4,7 @@ const DIALOG_FOOTER_NAME = "an-dialog-footer"
 const DIALOG_CONTENT_NAME = "an-dialog-content"
 
 class Dialog extends HTMLElement {
-  #open = true;  
+  #open = false;  
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -75,12 +75,12 @@ class Dialog extends HTMLElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     if(name === "open"){
-      this.#open = newValue;
+      this.#open = true;
       this.update();  
     }
   }
   static get observedAttributes() {
-    return ["open"];
+    return ["open", "size"];
   }
 
   elements(){
