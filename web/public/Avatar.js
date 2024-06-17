@@ -8,6 +8,12 @@ class Avatar extends HTMLElement {
   alt = "";
   name = "";
 
+  sizeMap = {
+    "sm": "24px",
+    "md": "32px",
+    "lg": "40px",
+  }
+
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -30,6 +36,10 @@ class Avatar extends HTMLElement {
       this.update();
     }
 
+    if (name === "size") {
+      this.style.setProperty("--avatar-size", this.sizeMap[newValue]);
+    }
+
     if (name === "name") {
       this.name = newValue;
       this.update();
@@ -37,7 +47,7 @@ class Avatar extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["src", "alt", "name"];
+    return ["src", "alt", "name", "size"];
   }
 
   getColorForName(name) {
@@ -84,12 +94,14 @@ class Avatar extends HTMLElement {
   static get styles() {
     return /*css*/ `
       :host{
+        --avatar-size: 50px;
         display: block;
-        width: 50px;
-        height: 50px;
+        width: var(--avatar-size);
+        height: var(--avatar-size);
         border-radius: 50%;
         background-color: red;
         overflow: hidden;
+        font-size: calc(var(--avatar-size) / 2.5);
       }
 
       .avatar{
@@ -109,7 +121,6 @@ class Avatar extends HTMLElement {
         height: 100%;
         width: 100%;
         place-content: center;
-        font-size: 1.1rem;
         font-weight: bold;
       }
     `;
