@@ -9,7 +9,7 @@ class Drawer extends HTMLElement {
   $drawer;
   $isOpen = false;
   $btnClose = null;
-
+  disabledClose = false;
   static sideMap = {
     top: "top",
     left: "left",
@@ -100,7 +100,7 @@ class Drawer extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["open", "side", "size"];
+    return ["open", "side", "size", "disabledclose"];
   }
 
   closePressEscape = (e) => {
@@ -137,6 +137,10 @@ class Drawer extends HTMLElement {
       if(this.$drawer) this.$drawer.dataset.side = this.side;
       this.updateSize();
     }
+
+    if (name === "disabledclose") {
+      this.disabledClose = true;
+    }
   }
 
   handleToggle = () => {
@@ -152,10 +156,12 @@ class Drawer extends HTMLElement {
   }
 
   events() {
-    this.$drawerContainer.addEventListener("pointerdown", this.handleToggle);
     this.$drawer.addEventListener("pointerdown", (e) => e.stopPropagation());
-    this.$btnClose.addEventListener("click", this.handleToggle);
-    document.addEventListener("keydown", this.closePressEscape);
+    if(!this.disabledClose){
+      this.$drawerContainer.addEventListener("pointerdown", this.handleToggle);
+      this.$btnClose.addEventListener("click", this.handleToggle);
+      document.addEventListener("keydown", this.closePressEscape);
+    } 
   }
 
   update() {
@@ -185,7 +191,7 @@ class Drawer extends HTMLElement {
     </style>
     <div class="drawer-container">
       <div class="drawer" data-side="${this.side}" >
-        <button class="close">X</button>
+        ${this.disabledClose ? "" : `<button class="close">X</button>`}
         <slot></slot>
       </div>
     </div>
