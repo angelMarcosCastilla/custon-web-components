@@ -65,3 +65,4 @@ Un componente para mostrar un panel de contenido, con un header, footer y conten
 | open  | string |    false     |  para mostrar el componente                                 |
 | size  | string |   600      | tamaño del panel de contenido                                 |
 | side | left, right, bottom, top | left | posición del panel de contenido                    |
+|disabledclose | boolean | false | permite cerrar el panel de contenido con el botón de cerrar o click en el overlay|
