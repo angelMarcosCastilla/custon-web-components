@@ -38,10 +38,12 @@ class Drawer extends HTMLElement {
       top: 0;
       inset: 0;
       background-color: rgba(0, 0, 0, 0.5);
+      transition: opacity 0.2s ease-in;
+      opacity: 0;
       }
       .drawer {
         position: fixed;
-        background-color: var(--bg-color);
+        background-color: hsla(var(--background)/1);
         display: flex;
         flex-direction: column;
         overflow: auto;
@@ -81,8 +83,13 @@ class Drawer extends HTMLElement {
         cursor: pointer;
       }
       :host([open]) .drawer {
+
         transform: translateX(0) translateY(0);
-        transition: transform 0.2s ease-in-out;
+        transition: transform 0.2s ease-in;
+      }
+      :host([open]) .drawer-container {
+        opacity: 1;
+        transition: opacity 0.1s ease-in;
       }
       `;
   }
